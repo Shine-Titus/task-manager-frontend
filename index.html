@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <title>To-do-app</title>
+</head>
+<body>
+
+    <nav class="navbar bg-primary">
+        
+        <div class="ms-auto d-flex">
+            <h3 id="welcome" class="mx-3" style="color: white;"></h3>
+            <!-- <a href="login.html" class="btn btn-outline-light me-1">Login</a>
+            <a href="signup.html" class="btn btn-outline-light me-1">Signup</a> -->
+            <button class="btn btn-outline-light me-4" id="logout">Logout</button>
+        </div>   
+    </nav>
+
+    <h1 style="color: black; text-align: center;" class="mt-5 mb-5">Complete your shit!</h1>
+    <div class="container" id="container">
+        <!-- input element -->
+        <div class="input d-flex gap-3">
+            <input type="text" id="input" class="form-control">
+            <button id="add"  class="btn btn-primary"><i class="fa-solid fa-plus"></i></button>
+        </div>
+
+        <!-- tasks -->
+        <div class="sub-container d-flex flex-column flex-md-row justify-content-around">
+
+            <div class="elements d-flex flex-column align-items-left" id="elements">
+                <!-- <div class="task task1" id="1">
+                    <h1>study</h1>
+                    <button class="complete"><i class="fa-solid fa-check"></i></button>
+                    <button class='delete'><i class="fa-solid fa-trash"></i></button>
+                </div> -->
+            </div>
+
+            <div class="summary my-5 d-flex flex-column justify-content-around gap-3">
+
+                <button type="button" class="btn btn-outline-info sum" id="summarize">Summarize With AI</button>
+
+                <div class="card me-5" style="width: 22rem;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Your Tasks Summary</h5>
+                        <p class="card-text"></p>
+                    </div>
+
+                    <div class="d-flex justify-content-center my-5 spinner" id="spinner">
+                        <div class="spinner-border " role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        
+
+    </div>
+    <script src="task.js"></script>
+</body>
+</html>
