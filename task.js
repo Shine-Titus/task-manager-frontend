@@ -47,7 +47,7 @@ function addingTask(text, task_complete, current_task_id) {
 };
 
 const  refresh_token = async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/refresh/", {
+    const response = await fetch("https://task-manager-backend-3kaw.onrender.com/api/refresh/", {
         method: "POST",
         headers:{ "Content-Type": "application/json" },
         body: JSON.stringify({ refresh: localStorage.getItem("refresh") })
@@ -75,7 +75,7 @@ const summarize_tasks =  async () => {
     loader.classList.add('d-flex')
 
 
-    const response = await fetch("http://127.0.0.1:8000/summarize-tasks/", {
+    const response = await fetch("https://task-manager-backend-3kaw.onrender.com/summarize-tasks/", {
         method: "GET",
         headers: {
             "Authorization" : "Bearer " + localStorage.getItem('access')
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         token = localStorage.getItem('access')
     }
 
-    let response = await fetch("http://127.0.0.1:8000/view-tasks/", {
+    let response = await fetch("https://task-manager-backend-3kaw.onrender.com/view-tasks/", {
         method: "GET",
         headers: {
             "Authorization" : "Bearer " + token
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (response.status === 401) {
         await refresh_token();
         token = localStorage.getItem('access')
-        response = await fetch("http://127.0.0.1:8000/view-tasks/", {
+        response = await fetch("https://task-manager-backend-3kaw.onrender.com/view-tasks/", {
             method: "GET",
             headers: {
                 "Authorization" : "Bearer " + token
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 logout.addEventListener('click' , async () => {
     const refresh = localStorage.getItem('refresh')
 
-    const response = await fetch("http://127.0.0.1:8000/api/logout/" , {
+    const response = await fetch("https://task-manager-backend-3kaw.onrender.com/api/logout/" , {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ refresh 
@@ -168,7 +168,7 @@ document.getElementById("elements").addEventListener("click", async function(eve
             taskName.classList.add('completedStyle');
         }
         
-        const response = await fetch(`http://127.0.0.1:8000/view-tasks/${task_id}/completed/`, {
+        const response = await fetch(`https://task-manager-backend-3kaw.onrender.com/view-tasks/${task_id}/completed/`, {
             method: 'POST',
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('access')}`,
@@ -189,7 +189,7 @@ document.getElementById("elements").addEventListener("click",  async function(ev
         let task_id = task.dataset.id;
         task.remove();
 
-        const response = await fetch(`http://127.0.0.1:8000/view-tasks/${task_id}/`, {
+        const response = await fetch(`https://task-manager-backend-3kaw.onrender.com/view-tasks/${task_id}/`, {
             method: 'DELETE',
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('access')}`,
@@ -208,7 +208,7 @@ document.getElementById("elements").addEventListener("click",  async function(ev
 
 addTask.addEventListener('click', async () => {
 
-    const response = await fetch("http://127.0.0.1:8000/create-tasks/", {
+    const response = await fetch("https://task-manager-backend-3kaw.onrender.com/create-tasks/", {
         method: "POST",
         headers: {
             "Authorization" : "Bearer " + localStorage.getItem('access'),
@@ -232,7 +232,7 @@ addTask.addEventListener('click', async () => {
 input.addEventListener('keyup', async (event) => {
     if (event.key === 'Enter') {
 
-        const response = await fetch("http://127.0.0.1:8000/create-tasks/", {
+        const response = await fetch("https://task-manager-backend-3kaw.onrender.com/create-tasks/", {
             method: "POST",
             headers: {
                 "Authorization" : "Bearer " + localStorage.getItem('access'),
