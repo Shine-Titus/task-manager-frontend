@@ -10,7 +10,7 @@ async function Register(username, password) {
     });
 
     if (!response.ok) {
-        alert('registeration failed!')
+        alert('registeration failed, use a valid username and password.')
         return;
     }
 
