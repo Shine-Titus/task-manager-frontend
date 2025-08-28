@@ -5,9 +5,9 @@ const summarizer = document.getElementById('summarize')
 const loader = document.getElementById("spinner")
 const summary_area = document.querySelector('p')
 
-if (!localStorage.getItem("refresh")) {
-    window.location.href = "login.html";
-}
+// if (!localStorage.getItem("refresh")) {
+//     window.location.href = "login.html";
+// }
 
 let loadingFlag = false;
 
@@ -36,9 +36,12 @@ function addingTask(text, task_complete, current_task_id) {
     i2.classList.add('fa-solid', 'fa-trash')
     button2.appendChild(i2);
 
+    const nested_div = document.createElement('div')
+    nested_div.appendChild(button1);
+    nested_div.appendChild(button2);
+
     newDiv.appendChild(taskText);
-    newDiv.appendChild(button1);
-    newDiv.appendChild(button2);
+    newDiv.appendChild(nested_div);
     
     var parentDiv = document.getElementById("elements")
     parentDiv.appendChild(newDiv);
