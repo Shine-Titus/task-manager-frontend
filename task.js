@@ -14,7 +14,7 @@ let loadingFlag = false;
 
 function addingTask(text, task_complete, current_task_id) {
     const newDiv = document.createElement("div");
-    newDiv.classList.add('task','d-flex', 'gap-3', 'mt-5');
+    newDiv.classList.add('task-card');
     newDiv.setAttribute('data-id', current_task_id);
 
     const taskText = document.createElement('h3');
@@ -25,14 +25,13 @@ function addingTask(text, task_complete, current_task_id) {
     }
 
     const button1 = document.createElement('button');
-
-    button1.classList.add('btn', 'btn-success','complete',);
+    button1.classList.add('btn', 'btn-success','complete','btn-sm');
     const i1 = document.createElement('i');
     i1.classList.add('fa-solid', 'fa-check')
     button1.appendChild(i1);
 
     const button2 = document.createElement('button');
-    button2.classList.add('btn', 'btn-secondary','delete');
+    button2.classList.add('btn', 'btn-secondary','delete','btn-sm');
     const i2 = document.createElement('i');
     i2.classList.add('fa-solid', 'fa-trash')
     button2.appendChild(i2);
