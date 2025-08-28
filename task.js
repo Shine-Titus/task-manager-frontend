@@ -157,7 +157,7 @@ logout.addEventListener('click' , async () => {
 document.getElementById("elements").addEventListener("click", async function(event) {
     if (event.target.closest(".complete")) { 
 
-        let task = event.target.closest(".task"); 
+        let task = event.target.closest(".task-card"); 
         let taskName = task.querySelector("h3");
         let task_id = task.dataset.id;
 
@@ -184,7 +184,7 @@ document.getElementById("elements").addEventListener("click", async function(eve
 
 document.getElementById("elements").addEventListener("click",  async function(event) {
     if (event.target.closest(".delete")) { 
-        let task = event.target.closest(".task");
+        let task = event.target.closest(".task-card");
         let task_id = task.dataset.id;
         task.remove();
 
