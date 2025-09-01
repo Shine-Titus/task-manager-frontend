@@ -4,13 +4,16 @@ const logout = document.getElementById('logout');
 const summarizer = document.getElementById('summarize')
 const loader = document.getElementById("spinner")
 const summary_area = document.querySelector('p')
+const search_box = document.getElementById('search')
+const task_list = document.getElementById('elements')
 
-// if (!localStorage.getItem("refresh")) {
-//     window.location.href = "login.html";
-// }
+const BASE_URL = "http://127.0.0.1:8000"
+
+if (!localStorage.getItem("refresh")) {
+    window.location.href = "login.html";
+}
 
 let loadingFlag = false;
-
 
 function addingTask(text, task_complete, current_task_id) {
     const newDiv = document.createElement("div");
@@ -25,7 +28,7 @@ function addingTask(text, task_complete, current_task_id) {
     }
 
     const button1 = document.createElement('button');
-    button1.classList.add('btn', 'btn-success','complete','btn-sm');
+    button1.classList.add('btn', 'btn-success','complete','btn-sm', 'me-2');
     const i1 = document.createElement('i');
     i1.classList.add('fa-solid', 'fa-check')
     button1.appendChild(i1);
@@ -49,7 +52,7 @@ function addingTask(text, task_complete, current_task_id) {
 };
 
 const  refresh_token = async () => {
-    const response = await fetch("https://task-manager-backend-3kaw.onrender.com/api/refresh/", {
+    const response = await fetch(`${BASE_URL}/api/refresh/`, {
         method: "POST",
         headers:{ "Content-Type": "application/json" },
         body: JSON.stringify({ refresh: localStorage.getItem("refresh") })
@@ -69,6 +72,51 @@ const  refresh_token = async () => {
 }
 
 
+const fetch_tasks = async (query='') => {
+
+    let token = localStorage.getItem('access');
+
+    if (!token) {
+        await refresh_token()
+        token = localStorage.getItem('access')
+    }
+
+
+    let response = await fetch(`${BASE_URL}/view-tasks/?search=${query}`, {
+        method: "GET",
+        headers: {
+            "Authorization" : "Bearer " + token
+        }
+    });
+
+    if (response.status === 401) {
+        await refresh_token();
+        token = localStorage.getItem('access')
+        response = await fetch(`${BASE_URL}/view-tasks/`, {
+            method: "GET",
+            headers: {
+                "Authorization" : "Bearer " + token
+            }
+        });
+    }
+
+    if (!response.ok) {
+        alert('cannot fetch tasks')
+        return
+    }
+
+    const data = await response.json()
+
+    task_list.innerHTML = ''
+
+    for (let i = 0; i < data['tasks'].length; i++) {
+        addingTask(data['tasks'][i].title, data['tasks'][i].completed, data['tasks'][i].id)
+    }
+
+    return data
+}
+    
+
 const summarize_tasks =  async () => {
 
 
@@ -77,7 +125,7 @@ const summarize_tasks =  async () => {
     loader.classList.add('d-flex')
 
 
-    const response = await fetch("https://task-manager-backend-3kaw.onrender.com/summarize-tasks/", {
+    const response = await fetch(`${BASE_URL}/summarize-tasks/`, {
         method: "GET",
         headers: {
             "Authorization" : "Bearer " + localStorage.getItem('access')
@@ -98,53 +146,19 @@ const summarize_tasks =  async () => {
 
 }
 
+
 document.addEventListener('DOMContentLoaded', async () => {
-    let token = localStorage.getItem('access');
 
-    if (!token) {
-        await refresh_token()
-        token = localStorage.getItem('access')
-    }
-
-    let response = await fetch("https://task-manager-backend-3kaw.onrender.com/view-tasks/", {
-        method: "GET",
-        headers: {
-            "Authorization" : "Bearer " + token
-        }
-    });
-
-    if (response.status === 401) {
-        await refresh_token();
-        token = localStorage.getItem('access')
-        response = await fetch("https://task-manager-backend-3kaw.onrender.com/view-tasks/", {
-            method: "GET",
-            headers: {
-                "Authorization" : "Bearer " + token
-            }
-        });
-    }
-
-    if (!response.ok) {
-        alert('cannot fetch tasks')
-        return
-    }
-
-    const data = await response.json()
-    
+    let data =  await fetch_tasks();
     document.getElementById('welcome').textContent = "Welcome, " + data['user']['username']
-
     summarize_tasks();
-
-    for (let i = 0; i < data['tasks'].length; i++) {
-        addingTask(data['tasks'][i].title, data['tasks'][i].completed, data['tasks'][i].id)
-    }
 
 })
 
 logout.addEventListener('click' , async () => {
     const refresh = localStorage.getItem('refresh')
 
-    const response = await fetch("https://task-manager-backend-3kaw.onrender.com/api/logout/" , {
+    await fetch(`${BASE_URL}/api/logout/` , {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ refresh 
@@ -170,7 +184,7 @@ document.getElementById("elements").addEventListener("click", async function(eve
             taskName.classList.add('completedStyle');
         }
         
-        const response = await fetch(`https://task-manager-backend-3kaw.onrender.com/view-tasks/${task_id}/completed/`, {
+        const response = await fetch(`${BASE_URL}/view-tasks/${task_id}/completed/`, {
             method: 'POST',
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('access')}`,
@@ -191,7 +205,7 @@ document.getElementById("elements").addEventListener("click",  async function(ev
         let task_id = task.dataset.id;
         task.remove();
 
-        const response = await fetch(`https://task-manager-backend-3kaw.onrender.com/view-tasks/${task_id}/`, {
+        const response = await fetch(`${BASE_URL}/view-tasks/${task_id}/`, {
             method: 'DELETE',
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('access')}`,
@@ -210,7 +224,7 @@ document.getElementById("elements").addEventListener("click",  async function(ev
 
 addTask.addEventListener('click', async () => {
 
-    const response = await fetch("https://task-manager-backend-3kaw.onrender.com/create-tasks/", {
+    const response = await fetch(`${BASE_URL}/create-tasks/`, {
         method: "POST",
         headers: {
             "Authorization" : "Bearer " + localStorage.getItem('access'),
@@ -234,7 +248,7 @@ addTask.addEventListener('click', async () => {
 input.addEventListener('keyup', async (event) => {
     if (event.key === 'Enter') {
 
-        const response = await fetch("https://task-manager-backend-3kaw.onrender.com/create-tasks/", {
+        const response = await fetch(`${BASE_URL}/create-tasks/`, {
             method: "POST",
             headers: {
                 "Authorization" : "Bearer " + localStorage.getItem('access'),
@@ -265,3 +279,13 @@ summarizer.addEventListener('click' , () => {
     summarize_tasks();
 
 })
+
+
+// search for tasks
+let timer
+search_box.addEventListener('input', (e) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        fetch_tasks(e.target.value);
+    }, 300); // wait 300ms after typing stops
+});
