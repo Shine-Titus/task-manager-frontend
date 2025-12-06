@@ -1,129 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Signup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup — Modern UI</title>
 
-  <!-- Bootstrap + FontAwesome -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
   <style>
+    :root {
+      --brand: #4c6ef5;
+      --brand2: #7950f2;
+      --bg-gradient: linear-gradient(135deg, var(--brand), var(--brand2));
+      --surface: #ffffff;
+      --text-dark: #1c1f28;
+      --text-muted: #6c727f;
+      --radius: 1.4rem;
+      --shadow: 0 10px 30px rgba(0,0,0,0.15);
+      --transition: 0.25s ease;
+    }
+
     body {
-      background: linear-gradient(135deg, #0d6efd, #6610f2);
-      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      font-family: "Inter", sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .card {
-      border: none;
-      border-radius: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    .card-modern {
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      background: var(--surface);
     }
 
-    .card-body {
-      padding: 2rem 2.5rem;
+    .form-side {
+      padding: 3rem;
+    }
+
+    .heading {
+      font-weight: 800;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      letter-spacing: -0.03em;
+      color: var(--text-dark);
     }
 
     .form-control {
-      border-radius: 0.75rem;
-      padding: 0.9rem 1rem;
-      border: 1px solid #dee2e6;
-      box-shadow: none !important;
-      transition: all 0.2s ease;
+      border-radius: 0.9rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid #d0d4dc;
+      transition: var(--transition);
     }
+
     .form-control:focus {
-      border-color: #6610f2;
-      box-shadow: 0 0 0 0.2rem rgba(102, 16, 242, 0.25) !important;
+      border-color: var(--brand2);
+      box-shadow: 0 0 0 0.18rem rgba(121, 80, 242, 0.25);
     }
 
-    .btn {
-      border-radius: 0.75rem;
-      padding: 0.75rem 1.25rem;
+    .btn-primary, .btn-success {
+      border-radius: 0.9rem;
+      padding: 0.85rem;
       font-weight: 600;
-      transition: all 0.2s ease;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      letter-spacing: 0.3px;
+      transition: var(--transition);
     }
 
-    .signup-heading {
-      font-weight: 700;
-      color: #212529;
+    .btn-success {
+      background: var(--brand2);
+      border: none;
     }
 
-    .img-fluid {
+    .btn-success:hover {
+      background: var(--brand);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+
+    .side-img {
+      background: #f5f6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .side-img img {
+      max-width: 90%;
       border-radius: 1rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    a.text-primary {
+      color: var(--brand) !important;
+    }
+    a.text-primary:hover {
+      color: var(--brand2) !important;
     }
   </style>
 </head>
 <body>
-  <section class="vh-100 d-flex align-items-center">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="card">
-            <div class="row g-0">
 
-              <!-- Form Side -->
-              <div class="col-md-6 d-flex flex-column justify-content-center p-5">
-                <p class="text-center signup-heading h2 mb-4">Create Your Account ✨</p>
-                <form>
-                  <!-- Name -->
-                  <div class="mb-4">
-                    <label for="form3Example1c" class="form-label fw-semibold">
-                      <i class="fas fa-user me-2"></i>Your Name
-                    </label>
-                    <input type="text" id="form3Example1c" class="form-control" placeholder="Enter your name">
-                  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card-modern">
+          <div class="row g-0">
 
-                  <!-- Password -->
-                  <div class="mb-4">
-                    <label for="form3Example4c" class="form-label fw-semibold">
-                      <i class="fas fa-lock me-2"></i>Password
-                    </label>
-                    <input type="password" id="form3Example4c" class="form-control" placeholder="Enter your password">
-                  </div>
+            <!-- Left: Form Side -->
+            <div class="col-md-6 form-side">
+              <h2 class="heading">Create Your Account ✨</h2>
 
-                  <!-- Confirm Password -->
-                  <div class="mb-4">
-                    <label for="form3Example4cd" class="form-label fw-semibold">
-                      <i class="fas fa-key me-2"></i>Repeat Password
-                    </label>
-                    <input type="password" id="form3Example4cd" class="form-control" placeholder="Repeat your password">
-                  </div>
+              <form>
+                <!-- Name -->
+                <div class="mb-4">
+                  <label for="name" class="form-label fw-semibold">
+                    <i class="fas fa-user me-2"></i>Your Name
+                  </label>
+                  <input type="text" id="name" class="form-control" placeholder="Enter your name" />
+                </div>
 
-                  <!-- Register Button -->
-                  <div class="d-grid mb-4">
-                    <button type="button" class="btn btn-success btn-lg" id="register_btn">
-                      <i class="fa-solid fa-user-plus me-2"></i>Register
-                    </button>
-                  </div>
+                <!-- Password -->
+                <div class="mb-4">
+                  <label for="password" class="form-label fw-semibold">
+                    <i class="fas fa-lock me-2"></i>Password
+                  </label>
+                  <input type="password" id="password" class="form-control" placeholder="Enter your password" />
+                </div>
 
-                  <!-- Login Link -->
-                  <div class="text-center">
-                    <p class="mb-0">Already have an account? 
-                      <a href="login.html" class="fw-bold text-decoration-none text-primary">
-                        Login
-                      </a>
-                    </p>
-                  </div>
-                </form>
-              </div>
+                <!-- Confirm Password -->
+                <div class="mb-4">
+                  <label for="confirm_password" class="form-label fw-semibold">
+                    <i class="fas fa-key me-2"></i>Repeat Password
+                  </label>
+                  <input type="password" id="confirm_password" class="form-control" placeholder="Repeat your password" />
+                </div>
 
-              <!-- Image Side -->
-              <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center p-4 bg-light">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                     class="img-fluid shadow" alt="Signup illustration">
-              </div>
+                <!-- Register Button -->
+                <div class="d-grid mb-4">
+                  <button type="button" class="btn btn-success btn-lg" id="register_btn">
+                    <i class="fa-solid fa-user-plus me-2"></i>Register
+                  </button>
+                </div>
 
+                <!-- Login Link -->
+                <div class="text-center">
+                  <p class="mb-0 text-muted">Already have an account?
+                    <a href="login.html" class="fw-bold text-decoration-none text-primary">Login</a>
+                  </p>
+                </div>
+              </form>
             </div>
+
+            <!-- Right: Image Side -->
+            <div class="col-md-6 side-img d-none d-md-flex">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" alt="Signup Illustration" />
+            </div>
+
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <script src="signup.js"></script>
 </body>

@@ -1,137 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-do-app</title>
-  
-  <!-- Bootstrap + FontAwesome -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To‑do App — Modern Redesign</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+
   <style>
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --brand: #4c6ef5;
+      --brand-gradient: linear-gradient(135deg, #4c6ef5, #7950f2);
+      --text-dark: #1c1f28;
+      --text-muted: #6c727f;
+      --radius: 1.2rem;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+      --transition: 0.2s ease;
+    }
+
     body {
-      background: #f8f9fa;
-      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      font-family: "Inter", sans-serif;
+      color: var(--text-dark);
     }
 
     .navbar {
-      background: linear-gradient(90deg, #0d6efd, #6610f2);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      background: var(--brand-gradient);
+      box-shadow: var(--shadow);
     }
 
-    h1 {
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: #212529;
+    .hero {
+      text-align: center;
+      margin: 4rem 0;
     }
 
-    .input-card {
-      background: white;
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      padding: 1.5rem;
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .hero span {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .card-surface {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
     }
 
     .task-card {
-      background: white;
-      border-radius: 0.75rem;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      background: var(--surface);
+      border-radius: 1rem;
+      padding: 1rem 1.4rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .task-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      justify-content: space-between;
+      transition: var(--transition);
     }
 
-    .summary .card {
-      border: none;
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    .task-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .task-card h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
     }
 
     .completedStyle {
-        text-decoration: line-through;
+      text-decoration: line-through;
+      color: var(--text-muted);
     }
 
-    button {
-      transition: all 0.2s ease;
+    .btn-round {
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
     }
-    button:hover {
-      transform: scale(1.05);
+
+    .btn-round:hover {
+      transform: scale(1.08);
     }
+
+    #summarize {
+      border-radius: var(--radius);
+      padding: 0.9rem;
+      font-weight: 600;
+      border: 2px solid var(--brand);
+    }
+
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg px-4">
-    <div class="ms-auto d-flex align-items-center">
-      <h5 id="welcome" class="text-white me-3"></h5>
-      <button class="btn btn-light btn-sm" id="logout">
+  <nav class="navbar navbar-expand-lg px-4 py-3">
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <h5 id="welcome" class="text-white fw-semibold m-0"></h5>
+      <button class="btn btn-light btn-sm px-3" id="logout">
         <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
       </button>
     </div>
   </nav>
 
-  <!-- Heading -->
-  <div class="text-center my-5">
-    <h1>🚀 Get things done!</h1>
-    <span class="text-muted">Your personal task manager with a modern touch</span>
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Boost Your Productivity</h1>
+    <span>Organize tasks effortlessly with a clean & modern interface</span>
   </div>
 
-  <!-- Main Container -->
   <div class="container">
 
-    <!-- Input Box -->
-    <div class="input-card mb-5">
+    <!-- Add Task -->
+    <div class="card-surface mb-5">
       <div class="d-flex gap-3">
-        <input type="text" id="input" class="form-control form-control-lg shadow-sm" placeholder="Add a new task...">
-        <button id="add" class="btn btn-primary btn-lg"><i class="fa-solid fa-plus"></i></button>
+        <input id="input" type="text" class="form-control form-control-lg" placeholder="Add a new task..." />
+        <button id="add" class="btn btn-primary btn-round">
+          <i class="fa-solid fa-plus"></i>
+        </button>
       </div>
     </div>
 
-    <!-- Tasks & Summary -->
-    <div class="row g-5">
-      
-      <!-- Tasks List -->
+    <div class="row g-4">
+
+      <!-- Tasks Section -->
       <div class="col-md-6">
 
-        <div class="input-card mb-5">
-          <div class="d-flex gap-3">
-            <input type="text" id="search" class="form-control form-control-lg shadow-sm" placeholder="Search for a task...">
-          </div>
+        <div class="card-surface mb-4">
+          <input id="search" type="text" class="form-control form-control-lg" placeholder="Search tasks...">
         </div>
 
-        <div class="elements" id="elements">
-          <!-- Example Task -->
-          <!-- <div class="task-card" id="1">
-            <h3>Study</h3>
-            <div>
-                <button class="btn btn-success btn-sm me-2"><i class="fa-solid fa-check"></i></button>
-                <button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
-            </div> 
-          </div> -->
+        <div id="elements" class="d-flex flex-column gap-3">
+          <!-- dynamic tasks -->
         </div>
       </div>
 
-      <!-- Summary -->
-      <div class="col-md-6 summary">
-        <button type="button" class="btn btn-outline-primary mb-4 w-100 py-2" id="summarize">
+      <!-- Summary Section -->
+      <div class="col-md-6">
+        <button id="summarize" class="btn btn-outline-primary w-100 mb-4">
           <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Summarize with AI
         </button>
 
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Your Tasks Summary</h5>
-            <p class="card-text text-muted"></p>
-          </div>
-          <div class="d-flex justify-content-center my-4 spinner" id="spinner">
+        <div class="card-surface">
+          <h5 class="fw-bold mb-3">Overview</h5>
+          <p class="text-muted"></p>
+
+          <div class="d-flex justify-content-center mt-3" id="spinner">
             <div class="spinner-border text-primary" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
